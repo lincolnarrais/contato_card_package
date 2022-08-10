@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ContatoCardDialog extends StatelessWidget {
   const ContatoCardDialog({super.key});
+
+  final _cardTitle = 'Contato';
+  final _orgEmail = 'devsolutionsmb@gmail.com';
+  final _orgName = '© MB Development Solutions 2022';
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +35,11 @@ class ContatoCardDialog extends StatelessWidget {
                     top: Radius.circular(borderRadius),
                   ),
                 ),
-                child: const Align(
+                child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    'Contato',
-                    style: TextStyle(
+                    _cardTitle,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -49,11 +54,43 @@ class ContatoCardDialog extends StatelessWidget {
                     bottom: Radius.circular(borderRadius),
                   ),
                 ),
-                child: const Center(
-                  child: Text(
-                    'devsolutionsmb@gmail.com'
-                    '\n\n© MB Development Solutions 2022',
-                    textAlign: TextAlign.center,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        _orgName,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: SelectableText(
+                              _orgEmail,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Clipboard.setData(
+                                ClipboardData(text: _orgEmail),
+                              ).then((value) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Email copiado para a área de transferência.',
+                                    ),
+                                  ),
+                                );
+                              });
+                            },
+                            icon: const Icon(Icons.copy_sharp),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
