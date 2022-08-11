@@ -72,7 +72,7 @@ class ContatoCardDialog extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          IconButton(
+                          CustomIconButton(
                             onPressed: () {
                               Clipboard.setData(
                                 ClipboardData(text: _orgEmail),
@@ -86,7 +86,11 @@ class ContatoCardDialog extends StatelessWidget {
                                 );
                               });
                             },
-                            icon: const Icon(Icons.copy_sharp),
+                            icon: Icon(
+                              Icons.copy_sharp,
+                              size: 16,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ],
                       ),
@@ -97,6 +101,32 @@ class ContatoCardDialog extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomIconButton extends StatelessWidget {
+  final Icon icon;
+  final void Function() onPressed;
+
+  const CustomIconButton({
+    required this.icon,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const double size = 25;
+
+    return SizedBox(
+      height: size,
+      width: size,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(size / 2),
+        onTap: onPressed,
+        child: icon,
       ),
     );
   }
